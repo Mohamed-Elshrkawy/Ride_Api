@@ -20,11 +20,13 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
         'image',
         'phone',
+        'phone_num',
         'country_id',
         'gender',
         'email_verified_at',
@@ -45,8 +47,13 @@ class User extends Authenticatable implements JWTSubject
 
     public function country()
     {
-        return $this->hasOne(Country::class);
+        return $this->belongsTo(Country::class);
     }
+    public function rides()
+    {
+        return $this->hasMany(Ride::class);
+    }
+
 
     public function routeNotificationForVonage(Notification $notification): string
     {

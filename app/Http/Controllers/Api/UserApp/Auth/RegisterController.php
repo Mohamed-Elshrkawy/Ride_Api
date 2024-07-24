@@ -15,7 +15,7 @@ class RegisterController extends Controller
         $country = Country::find($request->country_id);
         User::create(array_merge(
             $request->validated(),
-            ['phone' => $country->code . $request->phone],
+            ['phone_num' => $country->code . $request->phone],
             ['password' => bcrypt($request->password)]
 
         ));

@@ -21,7 +21,7 @@ class VerifiyPhoneController extends Controller
     {
         $country = Country::find($request->country_id);
         $phone = $country->code . $request->phone;
-        $user = User::where('phone',$phone)->first();
+        $user = User::where('phone',$request->phone)->first();
         $user->notify(new VerifiyPhoneNotification($this->otp, $phone));
         return response()->json(['message' => 'OTP sent successfully.'], 200);
 
@@ -37,7 +37,7 @@ class VerifiyPhoneController extends Controller
             return response()->json(['error' => 'Invalid OTP.'], 401);
         }
 
-        $user = User::where('phone', $phone)->first();
+        $user = User::where('phone', $request->phone)->first();
 
             $user->update(['phone_verified_at' => now()]);
             return response()->json(['message' => 'User successfully verified phone.'], 200);

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('rides', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('driver_id')->constrained()->onDelete('cascade')->nu;
+            $table->unsignedBigInteger('driver_id')->nullable();
+            $table->unsignedBigInteger('category_id');
             $table->json('start_location');
             $table->json('end_location');
             $table->timestamp('start_time')->nullable();

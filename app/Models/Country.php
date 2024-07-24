@@ -10,12 +10,12 @@ class Country extends Model
     use HasFactory;
     protected $fillable=['code','flag','id'];
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
     }
-    public function driver()
+    public function drivers()
     {
-        return $this->belongsTo(Driver::class);
+        return $this->hasMany(Driver::class);
     }
 }
