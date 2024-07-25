@@ -49,9 +49,17 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(Country::class);
     }
+    public function cars()
+    {
+        return $this->hasMany(Car::class);
+    }
     public function rides()
     {
         return $this->hasMany(Ride::class);
+    }
+    public function driver()
+    {
+        return $this->hasOne(Ride::class);
     }
 
 
