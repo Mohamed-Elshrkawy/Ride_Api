@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -29,6 +30,7 @@ class User extends Authenticatable implements JWTSubject
         'phone_num',
         'country_id',
         'gender',
+        'user_type',
         'email_verified_at',
         'phone_verified_at',
         'location'
@@ -53,15 +55,34 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Car::class);
     }
+    public function drivers()
+    {
+        return $this->hasOne(Driver::class);
+    }
     public function rides()
     {
         return $this->hasMany(Ride::class);
+    }
+    public function rides_driver()
+    {
+        return $this->belongsToMany(Ride::class, 'ride_user', 'user_id', 'ride_id');
     }
     public function driver()
     {
         return $this->hasOne(Ride::class);
     }
-
+    public function ride_driver()
+    {
+        return $this->hasMany(Ride::class,'driver_id','id');
+    }
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class);
+    }
+    public function reviews(): MorphMany
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 
     public function routeNotificationForVonage(Notification $notification): string
     {

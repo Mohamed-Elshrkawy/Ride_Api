@@ -22,10 +22,18 @@ return new class extends Migration
             $table->timestamp('end_time')->nullable();
             $table->decimal('distance', 8, 2);
             $table->decimal('price', 10, 2);
-            $table->string('status')->default('Underway');
+            $table->string('status')->default('wait');
             $table->timestamps();
         });
-    }
+
+        Schema::create('ride_user', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('ride_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+        });
+}
+
 
     /**
      * Reverse the migrations.
@@ -33,5 +41,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('rides');
+        Schema::dropIfExists('ride_user');
     }
 };

@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\UserApp\App\CreateCarController;
+use App\Http\Controllers\Api\UserApp\App\DriverRideController;
+use App\Http\Controllers\Api\UserApp\App\HomeController;
 use App\Http\Controllers\Api\UserApp\App\ProfileUserController;
 use App\Http\Controllers\Api\UserApp\App\RideController;
 use App\Http\Controllers\Api\UserApp\App\UserLocationController;
@@ -33,13 +36,55 @@ Route::group(['prefix' => 'auth'],function () {
     Route::post('/resetPassword', [ResetPasswordController::class, 'resetPassword']);
 });
 
-Route::group(['prefix'=>'profile'],function(){
-    Route::post('update-profile',[ProfileUserController::class,'updateProfile']);
-    Route::get('show',[ProfileUserController::class,'show']);
-    Route::post('update-location',[UserLocationController::class,'updateLocation']);
-    Route::get('show-location',[UserLocationController::class,'show']);
+Route::group([/*'middleware' => ('verified.user')*/],function(){
+
+    Route::group(['prefix'=>'home'],function(){
+        Route::get('/',[HomeController::class,'home']);
+        Route::get('active',[HomeController::class,'active']);
+        Route::get('my-notification',[HomeController::class,'myNotification']);
+        Route::get('my-wallet',[HomeController::class,'myWallet']);
+
+    });
+    Route::group(['prefix'=>'profile'],function(){
+        Route::post('update-profile',[ProfileUserController::class,'updateProfile']);
+        Route::get('show',[ProfileUserController::class,'show']);
+        Route::post('update-location',[UserLocationController::class,'updateLocation']);
+    });
+
+    Route::group(['prefix'=>'user-ride'],function(){
+        Route::post('create-ride',[RideController::class,'create']);
+        Route::get('cancel-ride/{id}',[RideController::class,'cancel']);
+        Route::get('index',[RideController::class,'index']);
+        Route::post('review',[RideController::class,'review']);
+
+    });
+    Route::group(['prefix'=>'driver-ride'],function(){
+        Route::get('index',[DriverRideController::class,'index']);
+        Route::get('accept-ride/{id}',[DriverRideController::class,'accept']);
+        Route::get('cancel-ride/{id}',[DriverRideController::class,'cancel']);
+        Route::get('start-ride/{id}',[DriverRideController::class,'startRide']);
+        Route::get('ride-done/{id}',[DriverRideController::class,'rideDone']);
+        Route::post('review',[DriverRideController::class,'review']);
+
+
+    });
+
+    Route::group(['prefix'=>'car'],function(){
+        Route::get('car-type',[CreateCarController::class,'carType']);
+        Route::get('car-model/{id}',[CreateCarController::class,'carModel']);
+        Route::get('car-color',[CreateCarController::class,'carColor']);
+        Route::get('car-color',[CreateCarController::class,'carColor']);
+        Route::post('create-car',[CreateCarController::class,'createCar']);
+        Route::get('active-car/{id}',[CreateCarController::class,'activeCar']);
+        Route::get('my-cars',[CreateCarController::class,'myCar']);
+
+
+
+
+    });
+
+
+
+
 });
 
-Route::post('create-ride',[RideController::class,'create']);
-Route::get('cancel-ride/{id}',[RideController::class,'cancel']);
-Route::get('index',[RideController::class,'index']);

@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('drivers', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('work_option')->default('Work on the road');
-            $table->string('status')->default('active');
-
+            $table->unsignedTinyInteger('rating')->comment('Rating from 1 to 5');
+            $table->text('message')->nullable()->comment('Review message');
+            $table->bigInteger('ride_id');
+            $table->morphs('reviewable');
+            $table->timestamps();
         });
     }
 
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('drivers');
+        Schema::dropIfExists('reviews');
     }
 };

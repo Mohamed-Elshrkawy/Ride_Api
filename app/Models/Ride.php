@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ride extends Model
 {
     use HasFactory;
-    protected $fillable =['user_id','category_id','driver_id','start_location','end_location','start_time','end_time','distance','price','status'];
+    protected $fillable =['user_id','driver_id','category_id','driver_id','start_location','end_location','start_time','end_time','distance','price','status'];
 
     protected $casts = [
         'start_location'=>'array',
@@ -28,7 +28,16 @@ class Ride extends Model
     }
     public function driver()
     {
-        return $this->belongsTo(Driver::class);
+        return $this->belongsTo(User::class, 'driver_id', 'id');
+    }
+    public function drivers()
+    {
+        return $this->belongsTo(User::class, 'ride_user', 'ride_id', 'user_id');
     }
 
+    public function driversRide()
+    {
+        return $this->belongsToMany(User::class)->withPivot('status');
+
+    }
 }

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('car_type_id');
             $table->unsignedBigInteger('car_model_id');
             $table->unsignedBigInteger('car_color_id');
-            $table->unsignedBigInteger('plate_type_id');
-            $table->unsignedBigInteger('manufacturing_year_id');
+            $table->string('plate_type');
+            $table->BigInteger('manufacturing_year');
             $table->string('numbers');
             $table->string('plate_letters');
             $table->date('form_expiration');

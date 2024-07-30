@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plate_types', function (Blueprint $table) {
+        Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->integer('available_balance');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
         });
     }
 
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plate_types');
+        Schema::dropIfExists('wallets');
     }
 };

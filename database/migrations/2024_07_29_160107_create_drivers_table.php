@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('manufacturing_years', function (Blueprint $table) {
+        Schema::create('drivers', function (Blueprint $table) {
             $table->id();
-            $table->string('year');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('work_option')->default('Work on the road');
+            $table->string('status')->default('active');
+
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('manufacturing_years');
+        Schema::dropIfExists('drivers');
     }
 };

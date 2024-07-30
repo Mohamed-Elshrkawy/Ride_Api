@@ -29,8 +29,8 @@ class CreateRideRequest extends FormRequest
             'end_location.latitude' => 'required|numeric',
             'end_location.longitude' => 'required|numeric',
             'start_time'=>'required|date',
-            'category_id'=>'required|exists:categories,id'
-
+            'category_id'=>'required|exists:categories,id',
+            'distance'=>'required|numeric',
         ];
     }
 }
