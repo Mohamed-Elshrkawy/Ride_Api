@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\UserApp\App\ConversationController;
 use App\Http\Controllers\Api\UserApp\App\CreateCarController;
 use App\Http\Controllers\Api\UserApp\App\DriverRideController;
 use App\Http\Controllers\Api\UserApp\App\HomeController;
+use App\Http\Controllers\Api\UserApp\App\MessageController;
 use App\Http\Controllers\Api\UserApp\App\ProfileUserController;
 use App\Http\Controllers\Api\UserApp\App\RideController;
 use App\Http\Controllers\Api\UserApp\App\UserLocationController;
@@ -87,4 +89,9 @@ Route::group([/*'middleware' => ('verified.user')*/],function(){
 
 
 });
+Route::post('conversations', [ConversationController::class, 'startConversation']);
+Route::get('conversations', [ConversationController::class, 'getConversations']);
+
+Route::post('messages', [MessageController::class, 'sendMessage']);
+Route::get('messages/{conversationId}', [MessageController::class, 'getMessages']);
 
